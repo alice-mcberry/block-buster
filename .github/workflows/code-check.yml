@@ -1,0 +1,26 @@
+name: Game Quality Check
+
+# Where you use it: Triggering on code changes
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Find an existing action in the Marketplace to "Checkout" your code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Basic script to check if index.html exists (Simple Validation)
+      - name: Verify Core Files
+        run: |
+          if [ -f "index.html" ]; then
+            echo "✅ index.html found. Ready for launch!"
+          else
+            echo "❌ index.html is missing! Game will not load."
+            exit 1
+          fi
